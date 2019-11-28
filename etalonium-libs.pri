@@ -1,3 +1,9 @@
+INCLUDEPATH += $$PWD/sqlite
+HEADERS += $$PWD/sqlite/sqlite3.h
+SOURCES += $$PWD/sqlite/sqlite3.c
+
+LIBS += -ldl
+
 android {
     INCLUDEPATH += $$PWD/libs
       TODO: armv7
