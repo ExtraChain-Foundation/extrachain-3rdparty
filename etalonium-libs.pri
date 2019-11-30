@@ -2,11 +2,8 @@ INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
 SOURCES += $$PWD/sqlite/sqlite3.c
 
-LIBS += -ldl
-
 android {
     INCLUDEPATH += $$PWD/libs
-      TODO: armv7
 
     android:contains(QT_ARCH, arm) {
         INCLUDEPATH += $$PWD/gmp/android/armeabi-v7a
@@ -21,6 +18,7 @@ android {
 
 linux {
     LIBS += -lgmp -lgmpxx
+    LIBS += -ldl # for sqlite
 }
 
 ios {
@@ -38,16 +36,8 @@ macx {
     INCLUDEPATH += $$PWD/gmp/macos
 }
 
-windows {
-    !contains(QMAKE_TARGET.arch, x86_64) {
-        message("x86 build")
-        LIBS += -L$$PWD/gmp/windows/x32
-        INCLUDEPATH += $$PWD/gmp/windows/x32
-    } else {
-        message("x86_64 build")
-        LIBS += -L$$PWD/gmp/windows/x64
-        INCLUDEPATH += $$PWD/gmp/windows/x64
-    }
-
+windows { # TODO: only x64
+    LIBS += -L$$PWD/gmp/windows/x64
+    INCLUDEPATH += $$PWD/gmp/windows/x64
     LIBS += -lmpfr -lmpir
 }
