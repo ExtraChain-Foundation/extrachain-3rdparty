@@ -1,6 +1,8 @@
-INCLUDEPATH += $$PWD/sqlite
-HEADERS += $$PWD/sqlite/sqlite3.h
-SOURCES += $$PWD/sqlite/sqlite3.c
+!contains(DEFINES, ETALONIUM_SERVICE) {
+    INCLUDEPATH += $$PWD/sqlite
+    HEADERS += $$PWD/sqlite/sqlite3.h
+    SOURCES += $$PWD/sqlite/sqlite3.c
+}
 
 android {
     INCLUDEPATH += $$PWD/libs
