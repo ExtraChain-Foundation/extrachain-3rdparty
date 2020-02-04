@@ -24,19 +24,17 @@ linux {
 }
 
 ios {
-    contains(QT_ARCH, arm64) {
+
         LIBS += -L$$PWD/gmp/ios -lgmp -lgmpxx
         INCLUDEPATH += $$PWD/gmp/ios
-    } else {
-        LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
-        INCLUDEPATH += $$PWD/gmp/macos
-    }
+
 }
 
-macx {
-    LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
-    INCLUDEPATH += $$PWD/gmp/macos
+macos {
+        LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
+        INCLUDEPATH += $$PWD/gmp/macos
 }
+
 
 windows { # TODO: only x64
     LIBS += -L$$PWD/gmp/windows/x64
