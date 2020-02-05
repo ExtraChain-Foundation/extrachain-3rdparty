@@ -1,18 +1,25 @@
-!contains(DEFINES, ETALONIUM_SERVICE) {
-    INCLUDEPATH += $$PWD/sqlite
-    HEADERS += $$PWD/sqlite/sqlite3.h
-    SOURCES += $$PWD/sqlite/sqlite3.c
-}
-
+INCLUDEPATH += $$PWD/sqlite
+HEADERS += $$PWD/sqlite/sqlite3.h
+SOURCES += $$PWD/sqlite/sqlite3.c
+message($$QT_ARCH)
 android {
     INCLUDEPATH += $$PWD/libs
-
     android:contains(QT_ARCH, arm) {
         INCLUDEPATH += $$PWD/gmp/android/armeabi-v7a
         LIBS += -L$$PWD/gmp/android/armeabi-v7a
     }
 
     android:contains(QT_ARCH, arm64) {
+        INCLUDEPATH += $$PWD/gmp/android/arm64-v8a
+        LIBS += -L$$PWD/gmp/android/arm64-v8a
+    }
+
+    android:contains(QT_ARCH, armeabi-v7a) {
+        INCLUDEPATH += $$PWD/gmp/android/armeabi-v7a
+        LIBS += -L$$PWD/gmp/android/armeabi-v7a
+    }
+
+    android:contains(QT_ARCH, arm64-v8a) {
         INCLUDEPATH += $$PWD/gmp/android/arm64-v8a
         LIBS += -L$$PWD/gmp/android/arm64-v8a
     }
