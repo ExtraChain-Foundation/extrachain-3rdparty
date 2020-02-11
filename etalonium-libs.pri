@@ -1,8 +1,17 @@
+contains(DEFINES, ETALONIUM_CLIENT) {
+    include($$PWD/QZXing/QZXing.pri)
+    include($$PWD/SortFilterProxyModel/SortFilterProxyModel.pri)
+    include($$PWD/statusbar/statusbar.pri)
+}
+
+include($$PWD/asyncfuture/asyncfuture.pri)
 INCLUDEPATH += $$PWD/boolinq
 INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
 SOURCES += $$PWD/sqlite/sqlite3.c
+
 message($$QT_ARCH)
+
 android {
     INCLUDEPATH += $$PWD/libs
 
@@ -33,15 +42,13 @@ linux {
 }
 
 ios {
-
-        LIBS += -L$$PWD/gmp/ios -lgmp -lgmpxx
-        INCLUDEPATH += $$PWD/gmp/ios
-
+    LIBS += -L$$PWD/gmp/ios -lgmp -lgmpxx
+    INCLUDEPATH += $$PWD/gmp/ios
 }
 
 macos {
-        LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
-        INCLUDEPATH += $$PWD/gmp/macos
+    LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
+    INCLUDEPATH += $$PWD/gmp/macos
 }
 
 
