@@ -14,6 +14,8 @@
 #include <set>
 #include <unordered_set>
 
+//
+
 #ifdef QT_CORE_LIB
 #include <QVector>
 #include <QList>
@@ -644,6 +646,54 @@ namespace boolinq {
             });
             return items;
         }
+
+        template <typename TT>
+        TT toSomething() const {
+            TT items;
+            for_each([&items](T value) {
+                items.push_back(value);
+            });
+            return items;
+        }
+
+        template <typename TT>
+        TT toSomethingInsert() const {
+            TT items;
+            for_each([&items](T value) {
+                items.insert(value);
+            });
+            return items;
+        }
+
+
+#ifdef QT_CORE_LIB
+        QVector<T> toQVector() const
+        {
+            QVector<T> items;
+            for_each([&items](T value) {
+                items.push_back(value);
+            });
+            return items;
+        }
+
+        QList<T> toQList() const
+        {
+            QList<T> items;
+            for_each([&items](T value) {
+                items.push_back(value);
+            });
+            return items;
+        }
+
+        QSet<T> toQSet() const
+        {
+            QSet<T> items;
+            for_each([&items](T value) {
+                items.insert(value);
+            });
+            return items;
+        }
+#endif
 
         // Bits and bytes
 
