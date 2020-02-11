@@ -4,15 +4,6 @@ SOURCES += $$PWD/sqlite/sqlite3.c
 message($$QT_ARCH)
 android {
     INCLUDEPATH += $$PWD/libs
-    android:contains(QT_ARCH, arm) {
-        INCLUDEPATH += $$PWD/gmp/android/armeabi-v7a
-        LIBS += -L$$PWD/gmp/android/armeabi-v7a
-    }
-
-    android:contains(QT_ARCH, arm64) {
-        INCLUDEPATH += $$PWD/gmp/android/arm64-v8a
-        LIBS += -L$$PWD/gmp/android/arm64-v8a
-    }
 
     android:contains(QT_ARCH, armeabi-v7a) {
         INCLUDEPATH += $$PWD/gmp/android/armeabi-v7a
@@ -22,6 +13,16 @@ android {
     android:contains(QT_ARCH, arm64-v8a) {
         INCLUDEPATH += $$PWD/gmp/android/arm64-v8a
         LIBS += -L$$PWD/gmp/android/arm64-v8a
+    }
+
+    android:contains(QT_ARCH, x86) {
+        INCLUDEPATH += $$PWD/gmp/android/x86
+        LIBS += -L$$PWD/gmp/android/x86
+    }
+
+    android:contains(QT_ARCH, x86_64) {
+        INCLUDEPATH += $$PWD/gmp/android/x86_64
+        LIBS += -L$$PWD/gmp/android/x86_64
     }
 }
 
