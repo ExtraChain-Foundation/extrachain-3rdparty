@@ -32,7 +32,6 @@ android {
         INCLUDEPATH += $$PWD/gmp/android/x86
         LIBS += -L$$PWD/gmp/android/x86
         ANDROID_EXTRA_LIBS += $$PWD/gmp/android/x86/libgmp.so $$PWD/gmp/android/x86/libgmpxx.so
-        
     }
 
     android:contains(QT_ARCH, x86_64) {
@@ -56,7 +55,6 @@ macos {
     LIBS += -L$$PWD/gmp/macos -lgmp -lgmpxx
     INCLUDEPATH += $$PWD/gmp/macos
 }
-
 
 windows { # TODO: only x64
     LIBS += -L$$PWD/gmp/windows/x64
