@@ -59,8 +59,15 @@ macos {
     INCLUDEPATH += $$PWD/gmp/macos
 }
 
-windows { # TODO: only x64
-    LIBS += -L$$PWD/gmp/windows/x64
-    INCLUDEPATH += $$PWD/gmp/windows/x64
-    LIBS += -lmpfr -lmpir
+windows {
+    contains(QT_ARCH,i386) {
+        LIBS += -L$$PWD/gmp/windows/x32
+        INCLUDEPATH += $$PWD/gmp/windows/x32
+        LIBS += -lmpfr -lmpir
+    }
+    contains(QT_ARCH,x86_64) {
+        LIBS += -L$$PWD/gmp/windows/x32
+        INCLUDEPATH += $$PWD/gmp/windows/x32
+        LIBS += -lmpfr -lmpir
+    }
 }
