@@ -66,8 +66,8 @@ windows {
         LIBS += -lmpfr -lmpir
     }
     contains(QT_ARCH,x86_64) {
-        LIBS += -L$$PWD/gmp/windows/x32
-        INCLUDEPATH += $$PWD/gmp/windows/x32
+        LIBS += -L$$PWD/gmp/windows/x64
+        INCLUDEPATH += $$PWD/gmp/windows/x64
         LIBS += -lmpfr -lmpir
     }
 }
