@@ -1,4 +1,4 @@
-# qzxing [![Build Status](https://travis-ci.com/ftylitak/qzxing.svg?branch=master)](https://travis-ci.com/ftylitak/qzxing)
+# qzxing [![Build Status](https://travis-ci.com/ftylitak/qzxing.svg?branch=master)](https://travis-ci.com/ftylitak/qzxing) [![Build Status](https://ci.appveyor.com/api/projects/status/0033p4dyo49iy5jq?svg=true)](https://ci.appveyor.com/project/ftylitak/qzxing) [![Total alerts](https://img.shields.io/lgtm/alerts/g/ftylitak/qzxing.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ftylitak/qzxing/alerts/) [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/ftylitak/qzxing.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ftylitak/qzxing/context:cpp)
 Qt/QML wrapper library for the [ZXing](https://github.com/zxing/zxing) barcode image processing library. 
 
 Supports barcode decoding for the following types: 
@@ -37,6 +37,7 @@ Supports barcode decoding for the following types:
         1. [C++/Qt](#howToEncodingCPP)
         1. [Qt Quick](#howToEncodingQtQuick)
 	1. [Encoded text format Information](#howToEncodingFormatExamples)
+1. [Unit test dependency](#unitTestDependency)
 1. [Contact](#contact)
 
 <a name="howToInclude"></a>
@@ -97,7 +98,7 @@ Follows simple code snippets that brefly show the use of the library. For more d
 ### C++/Qt 
 
 ```cpp
-#include <QZXing.h>
+#include "QZXing.h"
 
 int main() 
 {
@@ -114,7 +115,7 @@ int main()
 First register QZXing type to the QML engine.
 
 ```cpp
-#include <QZXing.h>
+#include "QZXing.h"
 
 int main() 
 {
@@ -166,7 +167,7 @@ Use the encoding function with its default settings:
 * Error Correction Level: Low (L)
 
 ```cpp
-#include <QZXing.h>
+#include "QZXing.h"
 
 int main() 
 {
@@ -206,10 +207,12 @@ Image{
 
 Or use the encoding function with the optional custom settings that are passed like URL query parameters:
 
-| attribute name | value      | description                                   |
-| -------------- | ---------- | --------------------------------------------- |
-| corretionLevel | L, M, Q, H | the error correction level                    |
-| format         | qrcode     | the encode formatter. Currently only QR Code. |
+| attribute name  | value       | description                                   |
+| --------------- | ----------  | --------------------------------------------- |
+| border          | true, false | image has border (white 1px)                  |
+| correctionLevel | L, M, Q, H  | the error correction level                    |
+| format          | qrcode      | the encode formatter. Currently only QR Code. |
+| transparent     | true, false | whether the black pixels are transparent      |
 
 the size of the image can be adjusted by using the Image.sourceWidth and Image.sourceHeight properties of Image QML element.
 
@@ -223,7 +226,7 @@ TextField {
 
 Image{
 	source: "image://QZXing/encode/" + inputField.text +
-					"?corretionLevel=M" +
+					"?correctionLevel=M" +
 					"&format=qrcode"
 	sourceSize.width: 320
 	sourceSize.height: 320
@@ -235,6 +238,15 @@ Image{
 Here is a list of contents that have been encoded and tested to be recognizable by the Android ZXing decoding application: 
 [QR Code encoding wiki page](https://github.com/ftylitak/qzxing/wiki/QR-Code-encoding)
 
+<a name="unitTestDependency"></a>
+# Unit test dependency
+In order to run Unit tests in /test folder, the git submodule containing the test resoucres needs to be initialized and/or updated:
+
+```bash
+cd qzxing
+git submodule update --init --recursive
+```
+
 <a name="contact"></a>
 # Contact 
-In case of bug reports or feature requests feel free to open an [issue](https://github.com/ftylitak/qzxing/issues). 
+In case of bug reports or feature requests feel free to open an [issue](https://github.com/ftylitak/qzxing/issues).

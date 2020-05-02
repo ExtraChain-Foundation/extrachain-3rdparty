@@ -410,6 +410,7 @@ qzxing_multimedia {
     CONFIG += qzxing_qml
 
     DEFINES += QZXING_MULTIMEDIA
+	PRL_EXPORT_DEFINES += QZXING_MULTIMEDIA
 
     HEADERS += \
         $$PWD/QZXingFilter.h
@@ -423,6 +424,7 @@ qzxing_qml {
     greaterThan(QT_MAJOR_VERSION, 4): QT += quick
 
     DEFINES += QZXING_QML
+	PRL_EXPORT_DEFINES += QZXING_QML
 
     HEADERS +=  \
         $$PWD/QZXingImageProvider.h
@@ -447,16 +449,16 @@ symbian {
 !symbian {
     isEmpty(PREFIX) {
         maemo5 {
-            target.path = /opt/usr/lib
+            PREFIX = /opt/usr
         } else {
-            target.path = /usr/lib
+            PREFIX = /usr
         }
     }
 
     DEFINES += NOFMAXL
 
 	# Installation
-	headers.files = qzxing.h QZXing_global.h
+	headers.files = $$PWD/QZXing.h $$PWD/QZXing_global.h
 	headers.path = $$PREFIX/include
 	target.path = $$PREFIX/lib
 	INSTALLS += headers target

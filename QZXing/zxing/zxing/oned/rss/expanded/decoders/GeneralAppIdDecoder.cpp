@@ -1,4 +1,5 @@
 #include "GeneralAppIdDecoder.h"
+#include <zxing/common/StringUtils.h>
 
 namespace zxing {
 namespace oned {
@@ -22,7 +23,7 @@ String GeneralAppIdDecoder::decodeAllCodes(String &buff, int initialPosition)
             buff.append(parsedFields.getText());
         }
         if (info.isRemaining()) {
-            remaining = String(std::to_string(info.getRemainingValue()));
+            remaining = String(common::StringUtils::intToStr(info.getRemainingValue()));
         } else {
             remaining = String("");
         }
@@ -145,13 +146,13 @@ BlockParsedResult* GeneralAppIdDecoder::parseNumericBlock()
                 return new BlockParsedResult(DecodedInformation(m_current.getPosition(), m_buffer, numeric.getSecondDigit()), true);
             }
         }
-        m_buffer.append(std::to_string(numeric.getFirstDigit()));
+        m_buffer.append(common::StringUtils::intToStr(numeric.getFirstDigit()));
 
         if (numeric.isSecondDigitFNC1()) {
             DecodedInformation information(m_current.getPosition(), m_buffer);
             return new BlockParsedResult(information, true);
         }
-        m_buffer.append(std::to_string(numeric.getSecondDigit()));
+        m_buffer.append(common::StringUtils::intToStr(numeric.getSecondDigit()));
     }
 
     if (isNumericToAlphaNumericLatch(m_current.getPosition())) {
@@ -394,7 +395,10 @@ DecodedChar GeneralAppIdDecoder::decodeAlphanumeric(int pos)
         c = '/';
         break;
     default:
-        throw IllegalStateException("Decoding invalid alphanumeric value: " + sixBitValue);
+    {
+        std::string msg = "Decoding invalid alphanumeric value: " + common::StringUtils::intToStr(sixBitValue);
+        throw IllegalStateException(msg.c_str());
+    }
     }
     return DecodedChar(pos + 6, c);
 }

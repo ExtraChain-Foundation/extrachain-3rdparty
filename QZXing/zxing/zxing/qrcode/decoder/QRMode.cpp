@@ -21,9 +21,7 @@
 
 #include <zxing/ZXing.h>
 #include <zxing/qrcode/decoder/Mode.h>
-#include <zxing/common/Counted.h>
 #include <zxing/ReaderException.h>
-#include <zxing/qrcode/Version.h>
 #include <sstream>
 
 using zxing::qrcode::Mode;
@@ -31,6 +29,7 @@ using std::ostringstream;
 
 // VC++
 using zxing::qrcode::Version;
+using zxing::Ref;
 
 Mode Mode::TERMINATOR(0, 0, 0, 0x00, "TERMINATOR");
 Mode Mode::NUMERIC(10, 12, 14, 0x01, "NUMERIC");
@@ -96,7 +95,7 @@ Mode& Mode::forBits(int bits) {
     }
 }
 
-int Mode::getCharacterCountBits(const Version *version) const
+int Mode::getCharacterCountBits(Ref<Version> version) const
 {
     int number = version->getVersionNumber();
     if (number <= 9) {

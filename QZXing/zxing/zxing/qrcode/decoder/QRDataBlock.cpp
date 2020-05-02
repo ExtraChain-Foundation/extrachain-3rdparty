@@ -39,7 +39,7 @@ ArrayRef<zxing::byte> DataBlock::getCodewords() {
 }
 
 
-std::vector<Ref<DataBlock> > DataBlock::getDataBlocks(ArrayRef<zxing::byte> rawCodewords, Version *version,
+std::vector<Ref<DataBlock> > DataBlock::getDataBlocks(ArrayRef<zxing::byte> rawCodewords, Ref<Version>version,
     ErrorCorrectionLevel &ecLevel) {
 
 
@@ -49,11 +49,8 @@ std::vector<Ref<DataBlock> > DataBlock::getDataBlocks(ArrayRef<zxing::byte> rawC
 
 
   // First count the total number of data blocks
-  int totalBlocks = 0;
+  int totalBlocks = ecBlocks.numBlocks();
   vector<ECB*> ecBlockArray = ecBlocks.getECBlocks();
-  for (size_t i = 0; i < ecBlockArray.size(); i++) {
-    totalBlocks += ecBlockArray[i]->getCount();
-  }
 
   // Now establish DataBlocks of the appropriate size and number of data codewords
   std::vector<Ref<DataBlock> > result(totalBlocks);

@@ -1,4 +1,5 @@
 #include "RSS14Reader.h"
+#include <zxing/common/StringUtils.h>
 
 namespace zxing {
 namespace oned {
@@ -47,9 +48,9 @@ Ref<Result> RSS14Reader::decodeRow(int rowNumber, Ref<BitArray> row, DecodeHints
     addOrTally(m_possibleRightPairs, rightPair);
     row->reverse();
 
-    for (Pair left : m_possibleLeftPairs) {
+    for (Pair &left : m_possibleLeftPairs) {
         if (left.getCount() > 1) {
-            for (Pair right : m_possibleRightPairs) {
+            for (Pair &right : m_possibleRightPairs) {
                 if (right.getCount() > 1 && checkChecksum(left, right)) {
                     return constructResult(left, right);
                 }
@@ -89,7 +90,7 @@ void RSS14Reader::reset()
 Ref<Result> RSS14Reader::constructResult(Pair leftPair, Pair rightPair) const
 {
     long long symbolValue = 4537077LL * leftPair.getValue() + rightPair.getValue();
-    String text(std::to_string(symbolValue));
+    String text(common::StringUtils::intToStr(symbolValue));
 
     String buffer(14);
     for (int i = 13 - text.length(); i > 0; i--) {
@@ -106,7 +107,7 @@ Ref<Result> RSS14Reader::constructResult(Pair leftPair, Pair rightPair) const
     if (checkDigit == 10) {
         checkDigit = 0;
     }
-    buffer.append(std::to_string(checkDigit));
+    buffer.append(common::StringUtils::intToStr(checkDigit));
 
     ArrayRef< Ref<ResultPoint> > leftPoints = leftPair.getFinderPattern().getResultPoints();
     ArrayRef< Ref<ResultPoint> > rightPoints = rightPair.getFinderPattern().getResultPoints();

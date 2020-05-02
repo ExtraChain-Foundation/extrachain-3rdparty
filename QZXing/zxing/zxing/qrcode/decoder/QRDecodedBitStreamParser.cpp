@@ -229,6 +229,7 @@ void DecodedBitStreamParser::decodeNumericSegment(Ref<BitSource> bits, std::stri
     while (count >= 3) {
         // Each 10 bits encodes three digits
         if (bits->available() < 10) {
+            delete[] bytes;
             throw ReaderException("format exception");
         }
         int threeDigitsBits = bits->readBits(10);
@@ -351,7 +352,7 @@ int parseECIValue(BitSource& bits) {
 
 Ref<DecoderResult>
 DecodedBitStreamParser::decode(ArrayRef<zxing::byte> bytes,
-                               Version* version,
+                               Ref<Version> version,
                                ErrorCorrectionLevel const& ecLevel,
                                Hashtable const& hints) {
     Ref<BitSource> bits_ (new BitSource(bytes));
