@@ -1,3 +1,3 @@
-# etalonium-libs
+# extrachain-3rdparty
 
-Library repo for Etalonium Project
+Library repo for ExtraChain Project

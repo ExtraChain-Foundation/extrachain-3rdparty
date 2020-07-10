@@ -1,4 +1,4 @@
-contains(DEFINES, ETALONIUM_CLIENT) {
+contains(DEFINES, ECLIENT) {
     include($$PWD/QZXing/QZXing.pri)
     include($$PWD/SortFilterProxyModel/SortFilterProxyModel.pri)
     include($$PWD/statusbar/statusbar.pri)
