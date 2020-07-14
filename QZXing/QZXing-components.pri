@@ -472,8 +472,7 @@ symbian {
 	unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
 }
 
-win32-msvc*{
-
+win32-msvc* {
     DEFINES += __STDC_LIMIT_MACROS
 
     INCLUDEPATH += $$PWD/zxing/win32/zxing \
@@ -484,8 +483,7 @@ win32-msvc*{
     SOURCES += $$PWD/zxing/win32/zxing/win_iconv.c
 }
 
-win32-g++{
-
+win32-g++ || win32-clang-msvc {
     INCLUDEPATH += $$PWD/zxing/win32/zxing
 
     HEADERS += $$PWD/zxing/win32/zxing/iconv.h
@@ -493,9 +491,6 @@ win32-g++{
     SOURCES += $$PWD/zxing/win32/zxing/win_iconv.c
 }
 
-!win32{
-    DEFINES += NO_ICONV
-}
-winrt {
+!win32 || winrt {
     DEFINES += NO_ICONV
 }
