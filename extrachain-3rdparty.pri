@@ -4,6 +4,8 @@ contains(DEFINES, ECLIENT) {
     include($$PWD/statusbar/statusbar.pri)
 }
 
+include($$PWD/libsodium/libsodium.pri)
+
 include($$PWD/OpenSSL/openssl.pri)
 include($$PWD/asyncfuture/asyncfuture.pri)
 INCLUDEPATH += $$PWD/boolinq
