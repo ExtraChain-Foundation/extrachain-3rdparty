@@ -1,3 +1,4 @@
+INCLUDEPATH += $$PWD/include/sodium
 INCLUDEPATH += $$PWD/include
 
 DISTFILES += \
