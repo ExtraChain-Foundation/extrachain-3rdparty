@@ -130,8 +130,8 @@ HEADERS += \
     $$PWD/include/sodium/randombytes_internal_random.h \
     $$PWD/include/sodium/randombytes_sysrandom.h \
     $$PWD/include/sodium/runtime.h \
-    $$PWD/include/sodium/utils.h \
-    $$PWD/include/sodium/version.h
+    $$PWD/include/sodium/sodium_version.h \
+    $$PWD/include/sodium/utils.h
 
 SOURCES += \
     $$PWD/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c \
@@ -238,5 +238,5 @@ SOURCES += \
     $$PWD/sodium/codecs.c \
     $$PWD/sodium/core.c \
     $$PWD/sodium/runtime.c \
-    $$PWD/sodium/utils.c \
-    $$PWD/sodium/version.c
+    $$PWD/sodium/sodium_version.c \
+    $$PWD/sodium/utils.c
