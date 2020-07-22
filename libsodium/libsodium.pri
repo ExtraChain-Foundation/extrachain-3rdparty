@@ -1,6 +1,9 @@
 INCLUDEPATH += $$PWD/include/sodium
 INCLUDEPATH += $$PWD/include
 
+win32-clang-msvc: QMAKE_CFLAGS += -msse4.1 -maes -mavx2 -msse2 -mssse3 -mpclmul # -march=native
+DEFINES += SODIUM_STATIC
+
 DISTFILES += \
     $$PWD/crypto_stream/salsa20/xmm6/salsa20_xmm6-asm.S
 
