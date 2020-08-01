@@ -515,12 +515,12 @@ public:
 
     void complete(QFuture<T> future) {
         incWeakRefCount();
-        auto onFinished = [=]() {
+        auto onFinished = [this, future]() {
             this->completeByFinishedFuture<T>(future);
             this->decWeakRefCount();
         };
 
-        auto onCanceled = [=]() {
+        auto onCanceled = [this, future]() {
             this->cancel();
             this->decWeakRefCount();
         };
@@ -538,12 +538,12 @@ public:
     void complete(QFuture<QFuture<ANY>> future) {
         incWeakRefCount();
 
-        auto onFinished = [=]() {
+        auto onFinished = [this, future]() {
             complete(future.result());
             this->decWeakRefCount();
         };
 
-        auto onCanceled = [=]() {
+        auto onCanceled = [this]() {
             this->cancel();
             this->decWeakRefCount();
         };
@@ -568,7 +568,7 @@ public:
     void cancel(QObject* sender, Member member) {
         incWeakRefCount();
         QObject::connect(sender, member,
-                         this, [=]() {
+                         this, [this]() {
             this->cancel();
             decWeakRefCount();
         });
@@ -577,12 +577,12 @@ public:
     template <typename ANY>
     void cancel(QFuture<ANY> future) {
         incWeakRefCount();
-        auto onFinished = [=]() {
+        auto onFinished = [this]() {
             cancel();
             decWeakRefCount();
         };
 
-        auto onCanceled = [=]() {
+        auto onCanceled = [this]() {
             decWeakRefCount();
         };
 
@@ -726,10 +726,10 @@ public:
         mutex.unlock();
 
         Private::watch(future, this, 0,
-                       [=]() {
+                       [this, index]() {
             completeFutureAt(index);
             decWeakRefCount();
-        },[=]() {
+        },[this,index]() {
             cancelFutureAt(index);
             decWeakRefCount();
         });
