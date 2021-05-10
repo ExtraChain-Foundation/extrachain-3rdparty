@@ -30,6 +30,7 @@ QImage QZXingImageProvider::requestImage(const QString &id, QSize *size, const Q
     QZXing::EncodeErrorCorrectionLevel correctionLevel = QZXing::EncodeErrorCorrectionLevel_L;
     bool border = false;
     bool transparent = false;
+    QSize explicitSize = requestedSize;
 
     int customSettingsIndex = id.lastIndexOf(QRegularExpression("\\?(correctionLevel|format|border|transparent)="));
     if(customSettingsIndex >= 0)
@@ -64,17 +65,31 @@ QImage QZXingImageProvider::requestImage(const QString &id, QSize *size, const Q
 
         if (optionQuery.hasQueryItem("transparent"))
             transparent = optionQuery.queryItemValue("transparent") == "true";
+
+        if (optionQuery.hasQueryItem("explicitSize")) {
+            QString explicitSizeStr = optionQuery.queryItemValue("explicitSize");
+            bool ok;
+            int size = explicitSizeStr.toInt(&ok);
+            if(ok){
+                explicitSize = QSize(size, size);
+            }
+        }
     }
     else
     {
         data = id.mid(slashIndex + 1);
     }
 
-    QZXingEncoderConfig encoderConfig(format, requestedSize, correctionLevel, border, transparent);
+#ifdef ENABLE_ENCODER_GENERIC
+    QZXingEncoderConfig encoderConfig(format, explicitSize, correctionLevel, border, transparent);
 
     QString dataTemp(QUrl::fromPercentEncoding(data.toUtf8()));
 
     QImage result = QZXing::encodeData(dataTemp, encoderConfig);
+#else
+    QImage result;
+    qDebug() << "barcode encoder disabled. Add 'CONFIG += enable_encoder_qr_code'";
+#endif
     *size = result.size();
     return result;
 }
