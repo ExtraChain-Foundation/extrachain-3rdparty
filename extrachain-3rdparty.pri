@@ -73,3 +73,9 @@ windows {
         LIBS += -lmpfr -lmpir
     }
 }
+
+!android:linux: QMAKE_CXX=ccache $$QMAKE_CXX
+QMAKE_SPEC_HOST = $$[QMAKE_SPEC]
+contains(QMAKE_SPEC_HOST,.*win32.*): android: QMAKE_CXX=$$PWD/ccache/windows/ccache.exe $$QMAKE_CXX # 4.3
+contains(QMAKE_SPEC_HOST,.*linux.*): android: QMAKE_CXX=ccache $$QMAKE_CXX
+# contains(QMAKE_SPEC_HOST,.*macx.*):
