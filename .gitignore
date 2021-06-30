@@ -1,0 +1,6 @@
+build-*
+*.user
+*.dll
+*.so
+*.lib
+*.a
