@@ -1,6 +1,7 @@
 #ifndef ROLEFILTER_H
 #define ROLEFILTER_H
 
+#include <QRegExp>
 #include "filter.h"
 
 namespace qqsfpm {
@@ -20,7 +21,7 @@ Q_SIGNALS:
     void roleNameChanged();
 
 protected:
-    QVariant sourceData(const QModelIndex &sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const;
+    QVariant sourceData(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const;
 
 private:
     QString m_roleName;

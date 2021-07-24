@@ -3,6 +3,7 @@
 
 #include <QSortFilterProxyModel>
 #include <QQmlParserStatus>
+#include <QRegExp>
 #include "filters/filtercontainer.h"
 #include "sorters/sortercontainer.h"
 #include "proxyroles/proxyrolecontainer.h"
@@ -24,26 +25,31 @@ class QQmlSortFilterProxyModel : public QSortFilterProxyModel,
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool delayed READ delayed WRITE setDelayed NOTIFY delayedChanged)
 
-    Q_PROPERTY(QString filterRoleName READ filterRoleName WRITE setFilterRoleName NOTIFY filterRoleNameChanged)
+    Q_PROPERTY(
+        QString filterRoleName READ filterRoleName WRITE setFilterRoleName NOTIFY filterRoleNameChanged)
     Q_PROPERTY(QString filterPattern READ filterPattern WRITE setFilterPattern NOTIFY filterPatternChanged)
-    Q_PROPERTY(PatternSyntax filterPatternSyntax READ filterPatternSyntax WRITE setFilterPatternSyntax NOTIFY filterPatternSyntaxChanged)
+    Q_PROPERTY(PatternSyntax filterPatternSyntax READ filterPatternSyntax WRITE setFilterPatternSyntax NOTIFY
+                   filterPatternSyntaxChanged)
     Q_PROPERTY(QVariant filterValue READ filterValue WRITE setFilterValue NOTIFY filterValueChanged)
 
     Q_PROPERTY(QString sortRoleName READ sortRoleName WRITE setSortRoleName NOTIFY sortRoleNameChanged)
-    Q_PROPERTY(bool ascendingSortOrder READ ascendingSortOrder WRITE setAscendingSortOrder NOTIFY ascendingSortOrderChanged)
+    Q_PROPERTY(bool ascendingSortOrder READ ascendingSortOrder WRITE setAscendingSortOrder NOTIFY
+                   ascendingSortOrderChanged)
 
     Q_PROPERTY(QQmlListProperty<qqsfpm::Filter> filters READ filtersListProperty)
     Q_PROPERTY(QQmlListProperty<qqsfpm::Sorter> sorters READ sortersListProperty)
     Q_PROPERTY(QQmlListProperty<qqsfpm::ProxyRole> proxyRoles READ proxyRolesListProperty)
 
 public:
-    enum PatternSyntax {
+    enum PatternSyntax
+    {
         RegExp = QRegExp::RegExp,
         Wildcard = QRegExp::Wildcard,
         FixedString = QRegExp::FixedString,
         RegExp2 = QRegExp::RegExp2,
         WildcardUnix = QRegExp::WildcardUnix,
-        W3CXmlSchema11 = QRegExp::W3CXmlSchema11 };
+        W3CXmlSchema11 = QRegExp::W3CXmlSchema11
+    };
     Q_ENUMS(PatternSyntax)
 
     QQmlSortFilterProxyModel(QObject* parent = 0);
@@ -90,7 +96,7 @@ public:
     Q_INVOKABLE QModelIndex mapFromSource(const QModelIndex& sourceIndex) const override;
     Q_INVOKABLE int mapFromSource(int sourceRow) const;
 
-    void setSourceModel(QAbstractItemModel *sourceModel) override;
+    void setSourceModel(QAbstractItemModel* sourceModel) override;
 
 Q_SIGNALS:
     void countChanged();
@@ -136,8 +142,8 @@ private:
     void onSorterRemoved(Sorter* sorter) override;
     void onSortersCleared() override;
 
-    void onProxyRoleAppended(ProxyRole *proxyRole) override;
-    void onProxyRoleRemoved(ProxyRole *proxyRole) override;
+    void onProxyRoleAppended(ProxyRole* proxyRole) override;
+    void onProxyRoleRemoved(ProxyRole* proxyRole) override;
     void onProxyRolesCleared() override;
 
     bool m_delayed;
