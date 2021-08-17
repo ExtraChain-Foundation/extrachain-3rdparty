@@ -124,3 +124,6 @@ target_include_directories(qzxing
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
+if (APPLE)
+    target_link_libraries(qzxing iconv)
+endif(APPLE)
