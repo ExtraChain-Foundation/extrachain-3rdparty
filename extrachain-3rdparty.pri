@@ -1,13 +1,13 @@
 contains(DEFINES, ECLIENT) {
     include($$PWD/QZXing/QZXing.pri)
-    include($$PWD/SortFilterProxyModel/SortFilterProxyModel.pri)
+    # include($$PWD/SortFilterProxyModel/SortFilterProxyModel.pri)
     include($$PWD/statusbar/statusbar.pri)
 }
 
 include($$PWD/libsodium/libsodium.pri)
 
 include($$PWD/OpenSSL/openssl.pri)
-include($$PWD/asyncfuture/asyncfuture.pri)
+# include($$PWD/asyncfuture/asyncfuture.pri)
 INCLUDEPATH += $$PWD/boolinq
 INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
