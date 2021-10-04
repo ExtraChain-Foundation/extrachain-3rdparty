@@ -8,8 +8,6 @@ SOURCES += \
     $$PWD/statusbar.cpp
 
 android {
-    QT += androidextras
-
     SOURCES += \
         $$PWD/statusbar_android.cpp
 } else:ios {

@@ -18,11 +18,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
 #include "statusbar_p.h"
 
-#include <QtAndroid>
+#include <QCoreApplication>
+#include <QJniObject>
 
 // WindowManager.LayoutParams
 #define FLAG_TRANSLUCENT_STATUS 0x04000000
@@ -30,38 +31,35 @@
 // View
 #define SYSTEM_UI_FLAG_LIGHT_STATUS_BAR 0x00002000
 
-static QAndroidJniObject getAndroidWindow()
-{
-    QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
+static QJniObject getAndroidWindow() {
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
     window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
     window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
     return window;
 }
 
-bool StatusBarPrivate::isAvailable_sys()
-{
-    return QtAndroid::androidSdkVersion() >= 21;
+bool StatusBarPrivate::isAvailable_sys() {
+    return QNativeInterface::QAndroidApplication::sdkVersion() >= 21;
 }
 
-void StatusBarPrivate::setColor_sys(const QColor &color)
-{
-    if (QtAndroid::androidSdkVersion() < 21)
+void StatusBarPrivate::setColor_sys(const QColor &color) {
+    if (QNativeInterface::QAndroidApplication::sdkVersion() < 21)
         return;
 
-    QtAndroid::runOnAndroidThread([=]() {
-        QAndroidJniObject window = getAndroidWindow();
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
         window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
     });
 }
 
-void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
-{
-    if (QtAndroid::androidSdkVersion() < 23)
+void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme) {
+    if (QNativeInterface::QAndroidApplication::sdkVersion() < 23)
         return;
 
-    QtAndroid::runOnAndroidThread([=]() {
-        QAndroidJniObject window = getAndroidWindow();
-        QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
+        QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
         if (theme == StatusBar::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
