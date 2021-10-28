@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QQuickImageProvider>
 #include <QQuickImageResponse>
+#include <QStringRef>
 #include <QUrlQuery>
 
 #include <QRunnable>

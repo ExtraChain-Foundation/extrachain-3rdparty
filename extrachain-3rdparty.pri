@@ -13,6 +13,9 @@ INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
 SOURCES += $$PWD/sqlite/sqlite3.c
 
+SOURCES += $$PWD/BlurhashQt/src/blurhash.cpp
+HEADERS += $$PWD/BlurhashQt/src/blurhash.h
+
 android {
     INCLUDEPATH += $$PWD/libs
     ANDROID_EXTRA_LIBS += \
