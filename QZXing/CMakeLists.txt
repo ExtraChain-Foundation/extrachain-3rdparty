@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.3)
 project(QZXing)
 
-find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core Concurrent REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Multimedia )
 find_package(Qt6 REQUIRED Svg Quick QuickControls2)
@@ -26,7 +26,7 @@ set(SOURCES
 
 if(QZXING_MULTIMEDIA)
 
-    LIST(APPEND SOURCES QZXingFilter.cpp QZXingFilter.h)
+    LIST(APPEND SOURCES QZXingFilterVideoSink.cpp QZXingFilterVideoSink.h)
     add_definitions(-DQZXING_MULTIMEDIA)
 
     SET(QZXING_USE_QML ON)
@@ -65,7 +65,7 @@ add_subdirectory(zxing/bigint)
 
 add_subdirectory(zxing/zxing)
 
-target_link_libraries(qzxing Qt6::Core Qt6::Gui)
+target_link_libraries(qzxing Qt6::Core Qt6::Gui Qt6::Concurrent)
 
 if(QZXING_MULTIMEDIA)
     target_link_libraries(qzxing Qt6::Multimedia)
