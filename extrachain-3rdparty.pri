@@ -2,19 +2,21 @@ contains(DEFINES, ECLIENT) {
     include($$PWD/QZXing/QZXing.pri)
     include($$PWD/SortFilterProxyModel/SortFilterProxyModel.pri)
     include($$PWD/statusbar/statusbar.pri)
+    # include($$PWD/OpenSSL/openssl.pri)
+
+    SOURCES += $$PWD/BlurhashQt/src/blurhash.cpp
+    HEADERS += $$PWD/BlurhashQt/src/blurhash.h
 }
 
 include($$PWD/libsodium/libsodium.pri)
 
-# include($$PWD/OpenSSL/openssl.pri)
-# include($$PWD/asyncfuture/asyncfuture.pri)
+INCLUDEPATH += $$PWD/boost/i
+LIBS += -L$$PWD/boost/l
+INCLUDEPATH += $$PWD/msgpack/include
 INCLUDEPATH += $$PWD/boolinq
 INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
 SOURCES += $$PWD/sqlite/sqlite3.c
-
-SOURCES += $$PWD/BlurhashQt/src/blurhash.cpp
-HEADERS += $$PWD/BlurhashQt/src/blurhash.h
 
 android {
     INCLUDEPATH += $$PWD/libs
