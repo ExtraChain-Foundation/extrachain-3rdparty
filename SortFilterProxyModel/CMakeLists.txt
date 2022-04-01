@@ -50,4 +50,6 @@ target_include_directories(SortFilterProxyModel PUBLIC
     $<TARGET_PROPERTY:Qt6::Qml,INTERFACE_INCLUDE_DIRECTORIES>
     )
 
-target_compile_options(SortFilterProxyModel PRIVATE /Zc:__cplusplus) # -fPIC
+IF (WIN32)
+    target_compile_options(SortFilterProxyModel PRIVATE /Zc:__cplusplus) # -fPIC
+ENDIF()
