@@ -18,6 +18,9 @@ INCLUDEPATH += $$PWD/sqlite
 HEADERS += $$PWD/sqlite/sqlite3.h
 SOURCES += $$PWD/sqlite/sqlite3.c
 
+INCLUDEPATH += $$PWD/fmt/include
+SOURCES += $$PWD/fmt/src/format.cc $$PWD/fmt/src/os.cc
+
 android {
     INCLUDEPATH += $$PWD/libs
 
