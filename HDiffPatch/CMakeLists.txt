@@ -17,16 +17,13 @@ option(USE_BSDIFF "Support bsdiff & bspatch" ON)
 option(USE_BZIP2 "Support bzip2 compression" ON)
 
 # Set paths for external libraries
-set(LZMA_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../lzma/C")
-set(ZSTD_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../zstd/lib")
-set(BZ2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../bzip2")
-set(ZLIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../zlib")
-set(LDEF_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../libdeflate")
-set(MD5_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../libmd5")
-
-# Compiler flags
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -DNDEBUG -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DNDEBUG -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -std=c++11")
+set(HDiffPatch "${CMAKE_CURRENT_SOURCE_DIR}/HDiffPatch")
+set(LZMA_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lzma/C")
+set(ZSTD_PATH "${CMAKE_CURRENT_SOURCE_DIR}/zstd/lib")
+set(BZ2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bzip2")
+set(ZLIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/zlib")
+set(LDEF_PATH "${CMAKE_CURRENT_SOURCE_DIR}/libdeflate")
+set(MD5_PATH "${CMAKE_CURRENT_SOURCE_DIR}/libmd5")
 
 # Conditional definitions and compilations
 if(USE_BZIP2)
@@ -119,34 +116,34 @@ endif()
 
 # HDiffPatch library sources
 set(HDIFFPATCH_SOURCES
-        libHDiffPatch/HPatch/patch.c
-        libHDiffPatch/HPatchLite/hpatch_lite.c
-        file_for_patch.c
-        hdiffz_import_patch.c
-        libHDiffPatch/HDiff/diff.cpp
-        libHDiffPatch/HDiff/match_block.cpp
-        libHDiffPatch/HDiff/private_diff/bytes_rle.cpp
-        libHDiffPatch/HDiff/private_diff/suffix_string.cpp
-        libHDiffPatch/HDiff/private_diff/compress_detect.cpp
-        libHDiffPatch/HDiff/private_diff/limit_mem_diff/digest_matcher.cpp
-        libHDiffPatch/HDiff/private_diff/limit_mem_diff/stream_serialize.cpp
-        libHDiffPatch/HDiff/private_diff/libdivsufsort/divsufsort64.cpp
-        libHDiffPatch/HDiff/private_diff/libdivsufsort/divsufsort.cpp
+        ${HDiffPatch}/libHDiffPatch/HPatch/patch.c
+        ${HDiffPatch}/libHDiffPatch/HPatchLite/hpatch_lite.c
+        ${HDiffPatch}/file_for_patch.c
+        ${HDiffPatch}/hdiffz_import_patch.c
+        ${HDiffPatch}/libHDiffPatch/HDiff/diff.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/match_block.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/bytes_rle.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/suffix_string.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/compress_detect.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/limit_mem_diff/digest_matcher.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/limit_mem_diff/stream_serialize.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/libdivsufsort/divsufsort64.cpp
+        ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/libdivsufsort/divsufsort.cpp
 )
 
 # Optional sources based on configuration
 if(DIR_DIFF)
     list(APPEND HDIFFPATCH_SOURCES
-            dirDiffPatch/dir_diff/dir_diff.cpp
-            dirDiffPatch/dir_diff/dir_diff_tools.cpp
-            dirDiffPatch/dir_diff/dir_manifest.cpp
-            dirDiffPatch/dir_patch/dir_patch.c
-            dirDiffPatch/dir_patch/dir_patch_tools.c
-            dirDiffPatch/dir_patch/new_dir_output.c
-            dirDiffPatch/dir_patch/new_stream.c
-            dirDiffPatch/dir_patch/ref_stream.c
-            dirDiffPatch/dir_patch/res_handle_limit.c
-            libHDiffPatch/HDiff/private_diff/limit_mem_diff/adler_roll.c
+            ${HDiffPatch}/dirDiffPatch/dir_diff/dir_diff.cpp
+            ${HDiffPatch}/dirDiffPatch/dir_diff/dir_diff_tools.cpp
+            ${HDiffPatch}/dirDiffPatch/dir_diff/dir_manifest.cpp
+            ${HDiffPatch}/dirDiffPatch/dir_patch/dir_patch.c
+            ${HDiffPatch}/dirDiffPatch/dir_patch/dir_patch_tools.c
+            ${HDiffPatch}/dirDiffPatch/dir_patch/new_dir_output.c
+            ${HDiffPatch}/dirDiffPatch/dir_patch/new_stream.c
+            ${HDiffPatch}/dirDiffPatch/dir_patch/ref_stream.c
+            ${HDiffPatch}/dirDiffPatch/dir_patch/res_handle_limit.c
+            ${HDiffPatch}/libHDiffPatch/HDiff/private_diff/limit_mem_diff/adler_roll.c
     )
 endif()
 
@@ -169,13 +166,13 @@ endif()
 
 # Create static library
 add_library(hdiffpatch STATIC ${HDIFFPATCH_SOURCES}
-        bsdiff_wrapper/bsdiff_wrapper.cpp
-        bsdiff_wrapper/bspatch_wrapper.c
-        vcdiff_wrapper/vcpatch_wrapper.c
-        vcdiff_wrapper/vcdiff_wrapper.cpp
-        libParallel/parallel_channel.cpp
-        libParallel/parallel_import.cpp
-        compress_parallel.cpp
+        ${HDiffPatch}/bsdiff_wrapper/bsdiff_wrapper.cpp
+        ${HDiffPatch}/bsdiff_wrapper/bspatch_wrapper.c
+        ${HDiffPatch}/vcdiff_wrapper/vcpatch_wrapper.c
+        ${HDiffPatch}/vcdiff_wrapper/vcdiff_wrapper.cpp
+        ${HDiffPatch}/libParallel/parallel_channel.cpp
+        ${HDiffPatch}/libParallel/parallel_import.cpp
+        ${HDiffPatch}/compress_parallel.cpp
 
         ${LDEF_PATH}/lib/deflate_compress.c
         ${LDEF_PATH}/lib/deflate_decompress.c
@@ -184,7 +181,7 @@ add_library(hdiffpatch STATIC ${HDIFFPATCH_SOURCES}
 
         ${MD5_PATH}/md5.c
 
-        hdiffz.cpp hpatchz.c)
+        ${HDiffPatch}/hdiffz.cpp ${HDiffPatch}/hpatchz.c)
 
 target_compile_definitions(
     hdiffpatch PUBLIC
@@ -210,12 +207,3 @@ target_include_directories(hdiffpatch PUBLIC
         ${MD5_PATH}
         ${LDEF_PATH}
 )
-
-# Installation
-#install(TARGETS hdiffpatch
-#        ARCHIVE DESTINATION lib
-#        LIBRARY DESTINATION lib)
-#
-#install(DIRECTORY libHDiffPatch
-#        DESTINATION include
-#        FILES_MATCHING PATTERN "*.h")
