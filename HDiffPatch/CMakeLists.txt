@@ -207,3 +207,5 @@ target_include_directories(hdiffpatch PUBLIC
         ${MD5_PATH}
         ${LDEF_PATH}
 )
+
+set(HDIFFPATCH_LIB hdiffpatch)
